@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Freelance Rate Floor Calculator</title>
+  <style>
+    :root { --ink:#14213d; --muted:#4a5568; --line:#e2e8f0; --bg:#f8fafc; --card:#fff; --accent:#0f766e; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color:var(--ink); background:var(--bg); }
+    main { max-width:640px; margin:0 auto; padding:2rem 1.25rem 3.5rem; }
+    h1 { font-size:1.5rem; margin:0 0 .5rem; }
+    p { color:var(--muted); line-height:1.5; }
+    form, .out { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:1.2rem; margin:1rem 0; }
+    label { display:block; font-size:.9rem; font-weight:600; margin:.85rem 0 .35rem; }
+    input { width:100%; padding:.65rem .7rem; border:1px solid var(--line); border-radius:8px; font-size:1rem; }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
+    @media (max-width:560px){ .row { grid-template-columns:1fr; } }
+    button { margin-top:1rem; background:var(--accent); color:#fff; border:0; border-radius:8px; padding:.75rem 1rem; font-weight:600; cursor:pointer; width:100%; }
+    .big { font-size:1.75rem; font-weight:700; color:var(--ink); margin:.25rem 0; }
+    .hint { font-size:.85rem; }
+    a.cta { color:var(--accent); font-weight:600; }
+    .disclaimer { font-size:.82rem; border-top:1px solid var(--line); padding-top:1rem; margin-top:1.5rem; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="hint">Pender Income Engine · Temporary validation shell · Experiment page (not permanent brand)</p>
+    <h1>Freelance rate floor calculator</h1>
+    <p>Estimate an hourly floor from take-home goal, billable hours, and planning buffers you control. Not tax advice.</p>
+    <p class="hint">Defaults below ($60k take-home, 1,000 billable hours, 20% admin, 3% fees, 25% tax buffer, $1,200 tools) are <strong>example starting points only</strong> — replace with your numbers.</p>
+
+    <form id="calc" onsubmit="return false;">
+      <div class="row">
+        <div>
+          <label for="takeHome">Desired annual take-home ($) — example default</label>
+          <input id="takeHome" type="number" min="0" step="100" value="60000" />
+        </div>
+        <div>
+          <label for="billable">Billable hours / year — example default</label>
+          <input id="billable" type="number" min="1" step="1" value="1000" />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="adminPct">Unpaid admin / overhead buffer (%) — example default</label>
+          <input id="adminPct" type="number" min="0" max="90" step="1" value="20" />
+        </div>
+        <div>
+          <label for="feePct">Payment / platform fees (%) — example default</label>
+          <input id="feePct" type="number" min="0" max="50" step="0.1" value="3" />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="taxPct">Tax planning buffer (%) — example default (not a tax rate)</label>
+          <input id="taxPct" type="number" min="0" max="60" step="1" value="25" />
+        </div>
+        <div>
+          <label for="tools">Annual tools / software ($) — example default</label>
+          <input id="tools" type="number" min="0" step="50" value="1200" />
+        </div>
+      </div>
+      <button type="button" id="run">Calculate floor</button>
+      <p class="hint">“Fee” and “tax” inputs are freelancer planning buffers for a rate floor — not jurisdiction tax rates and not client-invoice tax lines.</p>
+    </form>
+
+    <div class="out" id="out" hidden>
+      <p>Suggested hourly floor</p>
+      <p class="big" id="hourly">—</p>
+      <p id="detail" class="hint"></p>
+      <p>Want the Google Sheets toolkit (rate planner + quote builder + reserves)? <a class="cta" href="https://forms.gle/4DkwoLNyhobYwqoF9">Join the waitlist</a>.</p>
+      <p class="hint">Privacy: Data controller is Eric P (Founder / operator). Form answers (email and any optional role, craft, or pain text) are used only for this waitlist and product improvement. We do not sell your data. Opt out by replying “stop”.</p>
+      <p><a href="./offer.html">← Back to offer</a></p>
+    </div>
+
+    <p class="disclaimer">Worksheet only. Not tax, legal, accounting, or financial advice. No income results promised. Fee/tax fields are planning buffers for your rate floor — not jurisdiction tax rates and not safe client-invoice lines. Defaults are examples only.</p>
+  </main>
+  <script>
+    function num(id){ return Math.max(0, Number(document.getElementById(id).value) || 0); }
+    function calc(){
+      const takeHome = num('takeHome');
+      const billable = Math.max(1, num('billable'));
+      const admin = num('adminPct') / 100;
+      const fee = num('feePct') / 100;
+      const tax = num('taxPct') / 100;
+      const tools = num('tools');
+      // Effective revenue needed before fee+tax buffers, after adding tools and admin inflation of hours
+      const effectiveHours = billable * (1 - Math.min(admin, 0.9));
+      const costBase = takeHome + tools;
+      // Gross up for fee and tax reserves: need X such that X*(1-fee)*(1-tax) ~= costBase (simple sequential reserve)
+      let gross = costBase;
+      if (fee < 1) gross = gross / (1 - fee);
+      if (tax < 1) gross = gross / (1 - tax);
+      const hoursForRate = Math.max(effectiveHours, 1);
+      const hourly = gross / hoursForRate;
+      document.getElementById('out').hidden = false;
+      document.getElementById('hourly').textContent = '$' + hourly.toFixed(0) + ' / hr';
+      document.getElementById('detail').textContent =
+        'Uses ~' + hoursForRate.toFixed(0) + ' effective billable hours after admin buffer; grosses up for fee + tax planning buffers and adds tools. Adjust the example defaults — this is a planning floor, not a quote or tax calculation.';
+    }
+    document.getElementById('run').addEventListener('click', calc);
+    ['takeHome','billable','adminPct','feePct','taxPct','tools'].forEach(id => {
+      document.getElementById(id).addEventListener('change', calc);
+    });
+    calc();
+  </script>
+</body>
+</html>
