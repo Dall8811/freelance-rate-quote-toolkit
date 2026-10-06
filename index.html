@@ -3,70 +3,92 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Freelance Rate &amp; Quote Toolkit — Early Access</title>
+  <title>Freelance Rate &amp; Quote Toolkit — Stop guessing what to charge</title>
+  <meta name="description" content="A pricing decision toolkit for freelancers. Know your rate floor, recognize when your pricing needs another look, and get practical wording for scope creep, rush jobs, and price objections." />
   <style>
-    :root { color-scheme: light; --ink:#14213d; --muted:#4a5568; --line:#e2e8f0; --bg:#f8fafc; --card:#fff; --accent:#0f766e; }
+    :root { --ink:#14213d; --muted:#4a5568; --line:#e2e8f0; --bg:#f8fafc; --card:#fff; --accent:#0f766e; --accent-dark:#0c5f59; }
     * { box-sizing: border-box; }
-    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color:var(--ink); background:var(--bg); line-height:1.55; }
-    main { max-width:720px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
-    h1 { font-size:1.75rem; line-height:1.2; margin:0 0 .75rem; }
-    h2 { font-size:1.1rem; margin:2rem 0 .75rem; }
-    p, li { color:var(--muted); }
-    .lead { font-size:1.05rem; color:var(--ink); }
-    .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:1.25rem 1.35rem; margin:1.25rem 0; }
-    ul { padding-left:1.2rem; }
-    .cta { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; padding:.75rem 1.1rem; border-radius:8px; font-weight:600; margin-top:.5rem; }
-    .cta:hover { filter:brightness(1.05); }
-    .note { font-size:.9rem; }
-    .disclaimer { font-size:.85rem; border-top:1px solid var(--line); margin-top:2.5rem; padding-top:1rem; }
-    code { background:#eef2ff; padding:.1rem .35rem; border-radius:4px; font-size:.9em; }
+    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:var(--ink); background:var(--bg); font-size:16px; line-height:1.55; }
+    main { max-width:640px; margin:0 auto; padding:0 1.25rem 3rem; }
+    .shell { font-size:.8rem; color:var(--muted); padding:1rem 0 .25rem; }
+    .hero { padding:1.5rem 0 2rem; }
+    h1 { font-size:2rem; line-height:1.15; margin:0 0 .75rem; text-transform:uppercase; letter-spacing:.01em; }
+    .sub { font-size:1.05rem; color:var(--muted); margin:0 0 1.5rem; }
+    .btn { display:block; width:100%; text-align:center; background:var(--accent); color:#fff; font-weight:700; font-size:1.05rem; padding:.95rem 1rem; border-radius:10px; text-decoration:none; margin:0 0 .9rem; min-height:48px; }
+    .btn:hover { background:var(--accent-dark); }
+    .alt-link { display:block; text-align:center; color:var(--accent); font-weight:600; text-decoration:none; padding:.6rem; min-height:44px; }
+    .alt-link:hover { text-decoration:underline; }
+    section.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:1.25rem; margin:0 0 1.25rem; }
+    h2 { font-size:1.25rem; margin:0 0 1rem; }
+    .decision { margin:0 0 1rem; }
+    .decision:last-child { margin-bottom:0; }
+    .decision strong { display:block; font-size:.95rem; letter-spacing:.02em; margin-bottom:.2rem; }
+    .decision p { margin:0; color:var(--muted); font-size:.95rem; }
+    ol.toolkit { margin:0; padding:0; list-style:none; counter-reset:tk; }
+    ol.toolkit li { counter-increment:tk; margin:0 0 1rem; padding-left:2.25rem; position:relative; }
+    ol.toolkit li:last-child { margin-bottom:0; }
+    ol.toolkit li::before { content:counter(tk); position:absolute; left:0; top:.1rem; width:1.5rem; height:1.5rem; border-radius:50%; background:var(--accent); color:#fff; font-size:.85rem; font-weight:700; display:flex; align-items:center; justify-content:center; }
+    ol.toolkit strong { display:block; margin-bottom:.15rem; }
+    ol.toolkit p { margin:0; color:var(--muted); font-size:.95rem; }
+    .cta-block { text-align:center; padding:1.5rem 1.25rem; }
+    .cta-block h2 { text-transform:uppercase; letter-spacing:.02em; }
+    .cta-block p { color:var(--muted); margin:0 0 1.25rem; }
+    footer { border-top:1px solid var(--line); margin-top:2rem; padding-top:1.25rem; font-size:.82rem; color:var(--muted); }
+    footer nav { margin-top:.5rem; }
+    footer a { color:var(--accent); text-decoration:none; margin-right:1rem; }
+    footer a:hover { text-decoration:underline; }
+    @media (min-width:560px){
+      h1 { font-size:2.4rem; }
+      .btn { width:auto; display:inline-block; padding:.95rem 2rem; }
+    }
   </style>
 </head>
 <body>
   <main>
-    <p class="note">Freelance Rate & Quote Toolkit · Temporary validation shell · Early-access experiment (not a permanent brand) · Not tax or financial advice</p>
-    <h1>Freelance Rate &amp; Quote Toolkit</h1>
-    <p class="note">One experiment under a multi-offer umbrella — add/kill later without rebuilding the site.</p>
-    <p class="lead">Stop guessing your rate. Build a reusable floor price and turn it into a clean client quote — with room for fees, unpaid admin, and a tax buffer you control.</p>
-
-    <div class="card">
-      <h2>The problem</h2>
-      <p>Many freelancers underprice because quotes ignore non-billable time, payment fees, and taxes — then wonder why busy months still feel broke.</p>
+    <p class="shell">Freelance Rate &amp; Quote Toolkit</p>
+    <div class="hero">
+      <h1>Stop guessing what to charge.</h1>
+      <p class="sub">Know your rate floor, recognize when your pricing needs another look, and get practical wording for scope creep, rush jobs, and price objections.</p>
+      <a class="btn" href="https://forms.gle/4DkwoLNyhobYwqoF9">Get early access</a>
+      <a class="alt-link" href="calculator.html">Try the free rate-floor calculator &rarr;</a>
     </div>
-
-    <div class="card">
-      <h2>The outcome</h2>
-      <ul>
-        <li>A rate floor you can defend (take-home goal ÷ real billable hours + buffers)</li>
-        <li>A quote you can send without rebuilding math from scratch</li>
-        <li>Separate tabs for fee and tax <em>planning buffers</em> (to set your rate floor) — not jurisdiction tax rates</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h2>What’s inside (planned toolkit)</h2>
-      <ul>
-        <li><strong>Rate planner</strong> — annual/monthly take-home target → suggested hourly/day floor</li>
-        <li><strong>Quote builder</strong> — scope lines → subtotal → optional planning buffers → planning total</li>
-        <li><strong>Reserves tab</strong> — payment-fee % and tax-buffer % you set yourself (rate-floor planning only; not invoice tax lines)</li>
-        <li><strong>Free web calculator</strong> — instant estimate while the Sheet is in early access</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h2>Try the free calculator</h2>
-      <p>No account. Instant estimate in your browser.</p>
-      <a class="cta" href="./calculator.html">Open free calculator</a>
-    </div>
-
-    <div class="card">
-      <h2>Join the waitlist</h2>
-      <p>Get notified when the Google Sheets toolkit is ready. Optional questions help us improve the toolkit.</p>
-      <a class="cta" id="waitlist" href="https://forms.gle/4DkwoLNyhobYwqoF9">Join waitlist</a>
-      <p class="note">Privacy: We collect only what you submit on the form (email and any optional answers such as role, craft, and pricing-pain text) and use that information only to send Freelance Rate & Quote Toolkit early-access updates and improve the product. We do not sell your data. You can opt out at any time by replying “stop” to a waitlist email.</p>
-    </div>
-
-    <p class="disclaimer">This is a worksheet and calculator for personal planning. It is <strong>not</strong> tax, legal, accounting, or financial advice. “Fee reserve” and “tax reserve” mean <strong>freelancer planning buffers used to set a rate floor</strong> — they are <strong>not</strong> jurisdiction tax rates and should <strong>not</strong> be treated as safe client-invoice tax lines. Percentages are inputs you choose. No income results are promised. No fabricated demand, reviews, or scarcity.</p>
+    <section class="card" aria-label="Pricing decisions">
+      <h2>Five pricing decisions that shape your business</h2>
+      <div class="decision"><strong>WHEN TO REVISIT YOUR RATE</strong><p>Signals that your current pricing may no longer fit the work, demand, or clients you&rsquo;re taking on.</p></div>
+      <div class="decision"><strong>WHICH CLIENTS ARE WORTH KEEPING</strong><p>Look beyond headline revenue at scope, revisions, urgency, and the time a client actually consumes.</p></div>
+      <div class="decision"><strong>&ldquo;JUST ONE MORE CHANGE&rdquo;</strong><p>Turn extra scope into a clear change-order conversation instead of silently absorbing it.</p></div>
+      <div class="decision"><strong>RUSH WORK</strong><p>Make faster turnaround an explicit pricing choice rather than an awkward last-minute surcharge.</p></div>
+      <div class="decision"><strong>&ldquo;THAT&rsquo;S TOO EXPENSIVE&rdquo;</strong><p>Ways to adjust scope or timing without automatically cutting your rate.</p></div>
+    </section>
+    <section class="card" aria-label="Toolkit contents">
+      <h2>What&rsquo;s inside: the Pricing Decision Toolkit</h2>
+      <ol class="toolkit">
+        <li><strong>Rate-floor engine</strong><p>Turn your income target, expenses, and available time into a rate floor you can defend.</p></li>
+        <li><strong>Raise playbook</strong><p>How to read the signals that your pricing needs another look, and how to choose your next move.</p></li>
+        <li><strong>Client-fit filter</strong><p>A clear-eyed look at which clients are worth keeping, beyond headline revenue.</p></li>
+        <li><strong>Scope-creep scripts</strong><p>Practical wording for turning &ldquo;just one more change&rdquo; into a change-order conversation.</p></li>
+        <li><strong>Rush-fee menu</strong><p>Make faster turnaround an explicit pricing choice in the quote.</p></li>
+        <li><strong>Objection scripts</strong><p>Ways to respond to price pushback by adjusting scope or timing instead of cutting your rate.</p></li>
+      </ol>
+    </section>
+    <section class="card" aria-label="Free calculator">
+      <h2>Start free</h2>
+      <p><strong>Try the free rate-floor calculator.</strong></p>
+      <p style="color:var(--muted)">Get a practical starting-point hourly rate based on your own income target, expenses, available time, and planning buffers. 60 seconds, no signup.</p>
+      <a class="btn" href="calculator.html">Try the calculator</a>
+    </section>
+    <section class="card cta-block" aria-label="Early access">
+      <h2>Get the Pricing Decision Toolkit first</h2>
+      <p>Join the early-access list to hear when the first version is ready.</p>
+      <a class="btn" href="https://forms.gle/4DkwoLNyhobYwqoF9">Get early access</a>
+    </section>
+    <footer>
+      <p>Planning tools only &mdash; not tax, legal, accounting, or financial advice.</p>
+      <nav><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+    </footer>
   </main>
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "675e3a77023b4653a0417d7aea74f840"}'></script>
+  <!-- End Cloudflare Web Analytics -->
 </body>
 </html>
